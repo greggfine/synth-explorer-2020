@@ -464,7 +464,7 @@ main.ng-enter.ng-enter-active {
      }
      .keyboard-list {
           margin: 0 auto 180px auto;
-          padding-left: 15px;
+          display: block;
      }
      
      nav h1 {

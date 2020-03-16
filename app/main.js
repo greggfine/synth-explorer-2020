@@ -1,12 +1,16 @@
-var app = angular.module("myApp", ['ngRoute', 'ngAnimate']);
+var app = angular.module('myApp', ['ngRoute', 'ngAnimate']);
 
 app.config(['$routeProvider', function ($routeProvider){
     $routeProvider
         .when('/home', {
             templateUrl: 'views/home.html'
         })
-        .when('/keyboards', {
+        .when('/synths', {
             templateUrl: 'views/keyboards.html'
+        })
+        .when('/synths/:name/:description/:image', {
+            templateUrl: 'views/keyboards-detail.html',
+            controller: 'DetailsController'
         })
         .when('/contact', {
             templateUrl: 'views/contact.html',
@@ -25,17 +29,14 @@ app.config(['$routeProvider', function ($routeProvider){
 }])
 
 
-app.controller('myAppController', ['$scope', '$http', function($scope, $http){
-
+app.controller('myAppController', ['$scope', '$http', function ($scope, $http){
     $http.get('data/gInfo.json').then(successCallback, errorCallback);
     function successCallback(data) {
         $scope.myData = data.data;
-        console.log($scope.myData)
     }
     function errorCallback(error) {
         console.log(error)
     }
-
 }]);
 
 app.controller('ContactController', ['$scope', '$location', function($scope, $location){
@@ -44,11 +45,10 @@ app.controller('ContactController', ['$scope', '$location', function($scope, $lo
     }
 }])
 
-app.controller('flipCtrl', function ($scope) { });
-
-
-
-
-
-
-
+app.controller('DetailsController', ['$scope', '$routeParams', function($scope, $routeParams){
+    $scope.model = {
+        name: $routeParams.name,
+        description: $routeParams.description,
+        image: $routeParams.image,
+    }
+}])
